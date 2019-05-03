@@ -27,11 +27,12 @@ class App extends Component {
       this.state.farmer,
       this.state.market,
       this.handleUpdateState
-    )
-    this.setState({
-      myP5: new p5(sketch, "sketch")
-    })
-  }
+		)
+		console.log(this.state.farm)
+		console.log(this.state.farmer)
+		console.log(this.state.market)
+		new p5(sketch, 'sketch')
+	}
 
   render() {
     return (

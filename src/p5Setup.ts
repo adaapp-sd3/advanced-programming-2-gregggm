@@ -19,8 +19,8 @@ const makeFarm = (
       farmer.setHandleUpdate = setAppState
       farm.setHandleUpdate = setAppState
       market.setHandleUpdate = setAppState
-      farm.preload()
-
+			
+			farm.preload()
       farmer.preload()
       market.preload()
     }
@@ -33,7 +33,7 @@ const makeFarm = (
     }
 
     p.draw = function() {
-      p.background("#78d361")
+			p.background("#78d361")
       farm.draw()
       market.draw()
       farmer.draw()
