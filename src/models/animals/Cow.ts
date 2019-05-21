@@ -1,60 +1,29 @@
-import Animal from "../abstract/Animal"
-import Farm from "../Farm";
+import Animal from '../Animal';
+import Field from '../Field';
+import { DrawableImg } from '../interfaces';
 
-class Cow extends Animal {
-  name: string = "Cow"
-  genus: string = "Cows"
-  imgUrl: string = "/img/twtr/1f404.png"
-  eats: string = "straw"
-  hunger: number = 5
-  farm: Farm
-  
-  constructor(farm: Farm) {
-    super()
-    this.farm = farm
-  }
+class Cow extends Animal implements DrawableImg {
+	name: string = 'cow';
+	eats: string = 'straw';
+	imgUrl: string = '/img/twtr/1f404.png';
+	p5Img: any;
 
-  // if cow is hungry, yield less milk
-  yieldMilk() {
-    let amountOfMilkToYield = 5 - this.hunger
-    this.farm.milk.total += Math.abs(amountOfMilkToYield)
-    this.hunger = 5
-  }
+	constructor(field: Field) {
+		super(field, 5, 5);
+	}
 
-  // if cow is thin, yield less beef
-  yieldBeef(): number {
-    return this.hunger > 0 ? 100 / this.hunger : 120
-  }
+	occasionalActions() {
+		console.log('moo')
+	}
 
-  eatStraw() {
-    if (this.hunger <= 5 && this.hunger !== 0) {
-      if (this.farm.straw.total > 0) {
-        this.farm.straw.total--
-        this.hunger = this.hunger - 1
-      } else {
-        if (this.hunger < 5) {
-          this.hunger = this.hunger + 1
-        } 
-        
-      }
-    } 
-  }
+	preload(p5: any) {
+		this.p5Img = p5.loadImage(this.imgUrl);
+	}
 
-  public preload() {
-    this.p5Img = this.p5.loadImage(this.imgUrl)
-  }
-
-  makeSound() {
-    return "Moooo"
-  }
-
-  public draw(): any {
-
-    this.constrainItem()
-    this.doSomethingOccasionally(() => this.eatStraw())
-    this.stopForFarmer()
-
-  }
+	draw(p5: any) {
+		this.move();
+		p5.image(this.p5Img, this.position.x, this.position.y, this.size.w, this.size.h);
+	}
 }
 
-export default Cow
+export default Cow;

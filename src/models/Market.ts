@@ -1,43 +1,24 @@
-import Drawable from "./abstract/Drawable"
-import Farmer from './Farmer';
+import { Size, Pos } from './types';
+import { DrawableImg } from './interfaces';
 
-class Market extends Drawable {
-  imgUrl = "/img/twtr/1f3e2.png"
-  currentFarmer!: Farmer
-  
-  greenGasDemand: number = 100
-  milkDemand: number = 75
-  beefDemand: number = 75
+class Market implements DrawableImg {
+  position: Pos;
+  size: Size;
+  imgUrl: string = '/img/twtr/1f3e2.png';
+  p5Img: any;
 
-  milkPrice: number = 1
-  beefPrice: number = 25
-  greenGasPrice: number = 10
-  
+  constructor(position: Pos) {
+    this.position = position;
+    this.size = { w: 60, h: 60 };
+	}
 
-  solarPanelPrice: number = 10000
-
-  grassSeedPrice: number = 1
-
-
-  constructor() {
-    super()
-    this.x = 600
-    this.y = 500
-    this.width = 60
-    this.height = 60
+	public preload(p5: any) {
+    this.p5Img = p5.loadImage(this.imgUrl)
   }
 
-  set farmer(farmer: Farmer) {
-    this.currentFarmer = farmer
-  }
-
-  public preload() {
-    this.p5Img = this.p5.loadImage(this.imgUrl)
-  }
-
-  public draw() {
-    this.p5.image(this.p5Img, this.x, this.y, this.width, this.height)
+  public draw(p5: any) {
+    p5.image(this.p5Img, this.position.x, this.position.y, this.size.w, this.size.h)
   }
 }
 
-export default Market
+export default Market;

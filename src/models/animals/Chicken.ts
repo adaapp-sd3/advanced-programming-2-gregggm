@@ -1,31 +1,28 @@
-import Animal from '../abstract/Animal';
-import Farm from '../Farm';
+import Animal from '../Animal';
+import Field from '../Field';
+import { DrawableImg } from '../interfaces';
 
-class Chicken extends Animal {
-  name: string = 'Chicken';
-  genus: string = 'Chickens';
-  imgUrl: string = '/img/twtr/1f414.png';
-  eats: string = 'corn';
-  hunger: number = 5;
-	farm: Farm;
-	
-	constructor(farm: Farm) {
-    super()
-    this.farm = farm
-	}
-	
-	makeSound() {
-		return 'Cluck!'
+class Chicken extends Animal implements DrawableImg {
+	name: string = 'Chicken';
+	eats: string = 'straw';
+	imgUrl: string = '/img/twtr/1f414.png';
+	p5Img: any;
+
+	constructor(field: Field) {
+		super(field, 5, 5);
 	}
 
-	public preload() {
-    this.p5Img = this.p5.loadImage(this.imgUrl)
-  }
+	occasionalActions() {
+		console.log('cluck')
+	}
 
-	draw() {
-		this.constrainItem()
-    this.doSomethingOccasionally(() => {})
-		this.stopForFarmer()
+	preload(p5: any) {
+		this.p5Img = p5.loadImage(this.imgUrl);
+	}
+
+	draw(p5: any) {
+		this.move();
+		p5.image(this.p5Img, this.position.x, this.position.y, this.size.w, this.size.h);
 	}
 }
 
