@@ -1,32 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class FarmerDashboard extends Component {
+// TODO
+const FarmerDashboard = ({farmer}) => {
+	const { milk, beef, lamb, wool, eggs, chicken, straw, bread, corn } = farmer.inventory;
 
-  hideUI = () => {
-    this.props.farmer.showUI = false
-  }
-
-  render() {
-    return (
-      <div className="FarmerDashboard">
-        <dl>
-          <dt>Current budget</dt><dd>{this.props.farmer.budget}</dd>
-          {this.props.farmer.myFarm && (<>
-            <dt>Total cows</dt><dd>{this.props.farmer.myFarm.cows.total}</dd>
-            </>
-          )}
-          {this.props.farmer.myFarm && (<>
-            <dt>Total straw</dt><dd>{this.props.farmer.myFarm.straw.total} bails</dd>
-            <dt>Total milk</dt><dd>{this.props.farmer.myFarm.milk.total} pints</dd>
-            <dt>Total seeds</dt><dd>{this.props.farmer.myFarm.seeds.total} bunches</dd>
-
-            </>
-          )}
-        </dl>
-        <button onClick={this.hideUI}>Hide UI</button>
-      </div>
-    )
-  }
+	return (<div className="FarmerDashboard">
+		<h1>Inventory</h1>
+		<p>Milk:{milk} Beef:{beef} Lamb:{lamb} Wool:{wool} Eggs:{eggs} Chicken:{chicken} Straw:{straw} Bread:{bread} Corn:{corn}</p>
+	</div>)
 }
 
 export default FarmerDashboard;

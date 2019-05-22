@@ -1,12 +1,23 @@
-import { Size, Pos } from './types';
+import { Size, Pos, Inventory } from './types';
 import { DrawableImg } from './interfaces';
+import { Produce } from './enums';
 
 class Farmer implements DrawableImg {
   position: Pos;
   size: Size;
   imgUrl: string = '/img/farmer.png';
 	p5Img: any;
-	
+	inventory: Inventory = {
+		[Produce.BEEF]: 0,
+		[Produce.MILK]: 0,
+		[Produce.LAMB]: 0,
+		[Produce.CORN]: 0,
+		[Produce.STRAW]: 0,
+		[Produce.BREAD]: 0,
+		[Produce.WOOL]: 0,
+		[Produce.EGGS]: 0,
+		[Produce.CHICKEN]: 0
+	}
 
   constructor(position: Pos) {
     this.position = position;

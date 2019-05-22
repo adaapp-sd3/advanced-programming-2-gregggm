@@ -1,20 +1,16 @@
-import Animal from '../Animal';
-import Field from '../Field';
+import Crop from '../Crop';
 import { DrawableImg } from '../interfaces';
+import Field from '../Field';
 import { Produce } from '../enums';
 
-class Sheep extends Animal implements DrawableImg {
-  name: string = 'Sheep';
-  eats: string = Produce.STRAW;
-  imgUrl: string = '/img/twtr/1f411.png';
+class Corn extends Crop implements DrawableImg {
+  name: string = 'Corn';
+  imgUrl: string = '/img/twtr/1F33D.png';
 	p5Img: any;
+	yields: Produce = Produce.CORN;
 
   constructor(field: Field) {
-    super(field, 5, 5, Produce.WOOL);
-  }
-
-  occasionalActions() {
-    console.log('baa');
+    super(field, Produce.CORN);
   }
 
   preload(p5: any) {
@@ -23,7 +19,7 @@ class Sheep extends Animal implements DrawableImg {
 
   draw(p5: any) {
     if (this.field) {
-      this.move();
+      this.grow();
       p5.image(
         this.p5Img,
         this.position.x,
@@ -35,4 +31,4 @@ class Sheep extends Animal implements DrawableImg {
   }
 }
 
-export default Sheep;
+export default Corn;

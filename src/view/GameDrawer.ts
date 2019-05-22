@@ -1,6 +1,10 @@
 import GameState from '../models/GameState';
 import p5 from 'p5';
-import { Drawable } from '../models/interfaces';
+import { Drawable, DrawableImg } from '../models/interfaces';
+
+declare global {
+	interface Window { game: any; }
+}
 
 class GameDrawer {
   gameState: GameState;
@@ -10,15 +14,19 @@ class GameDrawer {
     'fields',
     'cows',
     'sheep',
-    'chickens',
-    'market',
-    'farmer'
+		'chickens',
+		'corn',
+		'grass',
+		'wheat',
+		'market',
+    'farmer',
+		'weather'
   ];
 
   constructor(gameState: GameState, updateDashboard: Function) {
     this.gameState = gameState;
     this.updateDashboard = updateDashboard;
-    global.game = gameState;
+    window.game = gameState;
     new p5(this.sketch, <HTMLElement>document.querySelector('.sketch'));
   }
 
@@ -53,11 +61,11 @@ class GameDrawer {
   }
 
   drawGame(p: any): void {
-		this.updateDashboard();
+		this.updateDashboard(this);
     for (const item of this.drawOrder) {
       if (this.gameState[item]) {
         if (this.gameState[item] instanceof Array) {
-          this.gameState[item].forEach((item: Drawable) => {
+          this.gameState[item].forEach((item: Drawable | DrawableImg) => {
             item.draw(p);
           });
         } else {

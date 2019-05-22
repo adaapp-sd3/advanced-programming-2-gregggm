@@ -1,5 +1,6 @@
 import { Pos, Size, Vel } from './types';
 import Field from './Field';
+import { Produce } from './enums';
 
 abstract class Animal {
   position: Pos;
@@ -7,17 +8,19 @@ abstract class Animal {
   velocity: Vel = { x: 0, y: 0 };
   health: number;
   hunger: number;
-  field: Field;
+	field: Field;
+	yields: Produce;
 
-  constructor(field: Field, health: number, hunger: number) {
+  constructor(field: Field, health: number, hunger: number, produce: Produce) {
     this.position = field.getRandomPosition();
     this.health = health;
     this.hunger = hunger;
-    this.field = field;
+		this.field = field;
+		this.yields = produce;
 
-		this.doStuffOccasionally();
-    field.addAnimal(this);
-	}
+    this.doStuffOccasionally();
+    field.addItem(this);
+  }
 
   private keepWithinField(): void {
     //top
@@ -46,32 +49,30 @@ abstract class Animal {
       this.position.x = this.field.position.x + this.field.size.w - this.size.w;
       this.velocity.x = -this.velocity.x;
     }
-	}
+  }
 
-	protected doStuffOccasionally = () => {
-			setInterval(() => {
-				if (Math.random() < 0.01) {
-				this.velocity.x = Math.random() >= 0.5 ? -0.1 : 0.1
-				this.velocity.y = Math.random() >= 0.5 ? -0.1 : 0.1
-				setTimeout(() => {
-					this.velocity.x = 0
-					this.velocity.y = 0
-				}, 5000)
+  protected doStuffOccasionally = () => {
+    setInterval(() => {
+      if (Math.random() < 0.01) {
+        this.velocity.x = Math.random() >= 0.5 ? -0.1 : 0.1;
+        this.velocity.y = Math.random() >= 0.5 ? -0.1 : 0.1;
+        setTimeout(() => {
+          this.velocity.x = 0;
+          this.velocity.y = 0;
+        }, 5000);
 
-				this.occasionalActions();
-			  }
-			}, 100)
-	}
+        this.occasionalActions();
+      }
+    }, 100);
+  };
 
-	occasionalActions(): void {};
+  occasionalActions(): void {}
 
   protected move(): void {
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
     this.keepWithinField();
   }
-
-  // abstract feed(): void;
 }
 
 export default Animal;

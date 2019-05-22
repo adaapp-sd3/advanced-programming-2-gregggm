@@ -1,20 +1,21 @@
 import { Pos, Size } from './types';
 import { Drawable } from './interfaces';
 import Animal from './Animal';
+import Crop from './Crop';
 
 class Field implements Drawable {
   position: Pos;
   size: Size;
-  animals: Animal[];
+  items: (Animal|Crop)[];
 
   constructor(position: Pos, size: Size) {
     this.position = position;
     this.size = size;
-    this.animals = [];
+    this.items = [];
   }
 
-  addAnimal(item: Animal) {
-    this.animals.push(item);
+  addItem(item: Animal | Crop) {
+    this.items.push(item);
   }
 
   getRandomPosition(): Pos {
@@ -25,9 +26,16 @@ class Field implements Drawable {
     const y =
       Math.floor(
         Math.random() * (this.position.y + this.size.h - this.position.y + 1)
-      ) + this.position.y;
+      ) + this.position.y - 10;
     return { x, y };
-  }
+	}
+	
+	yield(): void {
+		this.items.forEach(item => {
+			window.game.farmer.inventory[item.yields]++
+			delete item.field})
+		this.items = []
+	}
 
   draw(p5: any) {
     p5.stroke('#7c4011');

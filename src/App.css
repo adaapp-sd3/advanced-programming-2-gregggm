@@ -26,3 +26,7 @@
 .App-link {
   color: #61dafb;
 }
+
+.FarmManager {
+	overflow: scroll;
+}
